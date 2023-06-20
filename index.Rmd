@@ -88,3 +88,49 @@ $$ln Y_{t}=\alpha a+\beta_{1}a\ln P_{t}+\beta_{2}a\ln X_{t}+(1-a)\ln Y_{t-1}+a\m
 
 ### La base de datos:
 
+```{r, include=FALSE}
+demandaPCGregoryChow <- data.frame(
+  Año = c(1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965),
+  yt = c(370.26, 991.67, 2389.9, 5087.6, 8362, 12549, 19072, 38264, 64349, 95815, 136845, 194136),
+  pt = c(3.2554, 2.961, 2.5336, 2.3168, 2.0342, 1.5884, 1.0716, 0.9042, 0.6873, 0.5712, 0.4186, 0.3416),
+  lnyt0 = c(NA, 5.914205, 6.89939, 7.779007, 8.534561, 9.031453, 9.437396, 9.855977, 10.55226, 11.07208, 11.47017, 11.8266),
+  lnpt = c(1.180315, 1.085527, 0.929641, 0.840187, 0.710103, 0.462727, 0.069153, -0.100705, -0.374984, -0.560016, -0.870839, -1.074115),
+  lnytvsyt0 = c(NA, 0.98507, 0.879627, 0.755652, 0.497132, 0.406132, 0.41871, 0.696143, 0.519984, 0.398105, 0.356275, 0.349952),
+  yt0 = c(NA, 370.26, 991.67, 2389.9, 5087.6, 8362, 12549, 19072, 38264, 64349, 95815, 136845),
+  ytvsyt0 = c(NA, 2.678, 2.41, 2.129, 1.644, 1.501, 1.52, 2.006, 1.682, 1.489, 1.428, 1.419)
+)
+```
+
+```{r, comment=""}
+demandaPCGregoryChow
+```
+Donde:
+
+- **yt:** Es el índice de cantidad de ordenadores adquiridos.
+
+- **pt:** Precio del bien.
+
+- **yt0** Es la variable yt rezagada en un periodo.
+
+- **ytvsyt0** Es la división entre $Y_{y}$ y $Y_{t-1}$.
+
+### Evaluando el Modelo de Gregory Chow
+
+$$ln \frac{Y_{t}}{Y_{t-1}}=\alpha a+\beta_{1}a\ln P_{t}-\ln Y_{t-1}+a\mu_{t}$$
+Gregory Chow evalua el modelo sin considerar la variable $X_{t}$ el cual hace referencia a la remuneración de los posibles compradores de los ordenadores, para poder evaluar directamente como influye el precio y el índice de ordenadores adquiridos en periodos pasados, el resultado obtenido se refleja en la siguiente tabla.
+
+```{r, comment=""}
+modelo <- lm(lnytvsyt0 ~ lnpt + lnyt0, data = demandaPCGregoryChow, na.action = na.exclude)
+summary(modelo)
+```
+
+### Analizando los resultados
+
+- $R^{2}$ alto, lo cual indica que el modelo puede explicar la variabilidad de del índice de la cantidad de los ordenadores adquiridos.
+
+- La constante $a$ de la curva de Gompertz es 0.23886.
+
+- La elasticidad de la demanda de corto plazo ordenadores frente a $Pt$ es -0.35845.
+
+- La elasticidad de largo plazo es (-0.35845/0.23886) = -1.5
+
