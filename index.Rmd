@@ -24,38 +24,67 @@ Bien ahora como trabajo de fin de curso mi grupo presentara algunas aplicaciones
 
 Este estudio analiza el crecimiento del uso de las computadoras electrónicas en los Estados Unidos de 1955 a 1965. Se utiliza el enfoque de medir el crecimiento natural y el inducido por cambios tecnológicos, considerando las ecuaciones diferenciales Gompertz y logística. Además, se examina la relación entre los precios y la demanda, y se observa una disminución anual del 20% en los precios.
 
-## <span style="color:#585858">Curva de Gompertz </span>
+## <span style="color:#585858">1. Curva de Gompertz </span>
 
 $$T(t)=T^{*}b^{e^{-rt}}$$
 
-```{r, include=FALSE}
-library(ggplot2)
+![](https://drive.google.com/uc?export=view&id=1xgNFzEdU2li5sQ9cWM8QgIJe9NdHU4uO)
 
-plot_gompertz <- function() {
-  # Función de la curva de Gompertz
-  gompertz <- function(t, a, b, c) {
-    a * exp(-b * exp(-c * t))
-  }
+De la ecuación de la curva es fácil deducir:
 
-  # Datos para la gráfica
-  tiempo <- seq(0, 10, 0.1)  # Intervalo de tiempo
-  parametros <- list(a = 1, b = 0.5, c = 0.2)  # Parámetros de la curva
+$$\frac{d[\ln T(t)]}{dt}=-r(\ln b)e^{-rt}$$
+En efecto dado que se $<<estandariza>>$  $T(t)$ tomando sus unidades de manera que $T^{*}=1$.
 
-  # Crear un data frame con los datos
-  datos <- data.frame(tiempo = tiempo, valor = gompertz(tiempo, parametros$a, parametros$b, parametros$c))
+**Ecuación diferencial e hipótesis de crecimiento**
 
-  # Graficar la curva de Gompertz
-  ggplot(datos, aes(x = tiempo, y = valor)) +
-    geom_line() +
-    labs(title = "Curva de Gompertz",
-         x = "Tiempo",
-         y = "Valor") +
-    theme_minimal()
-}
-```
+$$\frac{d[\ln T(t)]}{dt}=r[\ln T^{*}-\ln T(t)]  \qquad  \color{red}{(*)}$$
+**Aproximación Discreta**
 
-```{r}
-plot_gompertz()
-```
+$$\ln \frac{X_{t}}{X_{t-1}}=a\ln X^{*}-a\ln X_{t-1}+\mu_{t}$$
+Gregory Chow usa la curva de Gompertz dado que es mejor que la logística en ocasiones donde el crecimiento aumenta rápidamente al principio y declina lentamente al final del proceso.
 
+## <span style="color:#585858">2. Modelo de Ajuste Parcial</span>
+
+Bajo el concepto de equilibrio de largo plazo se introduce la notación $Y^{*}$:
+
+$$Y^{*}_{t}=\alpha+\beta X_{t}+\mu_{t}$$
+
+El supuesto básico de *Ajuste Parcial* es el siguiente:
+
+**Tiempo continuo**
+
+$$\frac{dY(t)}{dt}=\delta\left[Y^{*}(t)-Y(T)\right]$$
+
+**Tiempo discreto**
+
+$$Y_{t}-Y_{t-1}=\delta \left(Y^{*}_{t}-Y_{t-1}\right) \qquad \color{green}{(**)}$$
+
+Donde $0<\delta\leq1$, condición estabilidad y no negatividad.
+
+**El modelo**
+
+Entonces ahora podemos eliminar $Y^{*}_{t}$ sustituyendo en la ecuación anterior, obteniendo:
+
+$$Y_{t}=\alpha\delta+\delta\beta X_{t}+\left(1-\delta\right)+\delta\mu_{t}$$
+
+## <span style="color:#585858">3. Desarrollando la Aplicación</span>
+
+De el modelo de Ajuste Parcial mencionado anteriormente necesitamos ajustar el modelo más complejo para usar la ecuación diferencial que da origen a la curva de Gompertz, suponiendo que $\delta$ es una función de $Y_{T}$ si se admite que:
+
+$$\delta=kY(t)$$
+De acuerdo a lo mencionado en el apartado 1 podemos usar $\color{red}{(*)}$ y por analogía:
+
+$$\frac{d[\ln Y(t)]}{dt}=r\left[\ln Y^{*}(t)-\ln Y(t)\right]$$
+
+Análogamente a $\color{green}{(**)}$ y en tiempo discreto:
+
+$$\ln Y_{t}-\ln Y_{t-1}=a\left(\ln Y^{*}_{t}-\ln Y_{t-1}\right)  \qquad \color{blue}{(*)}$$
+**Dando forma de acuerdo al Cambio Tecnologico y Demanda de Computadoras**
+
+$$\ln Y^{*}_{t}=\alpha+\beta_{1}\ln P_{t}+\beta_{2}\ln X_{t}+\mu_{t}$$
+Remplazando en $\color{blue}{(*)}$ tenemos el modelo de AJUSTE PARCIAL siguiente:
+
+$$ln Y_{t}=\alpha a+\beta_{1}a\ln P_{t}+\beta_{2}a\ln X_{t}+(1-a)\ln Y_{t-1}+a\mu_{t}$$
+
+### La base de datos:
 

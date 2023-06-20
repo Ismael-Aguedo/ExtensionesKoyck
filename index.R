@@ -14,3 +14,5 @@ modelo <- lm(LDIV ~ LPT + LYT_1, data = demandaPCGregoryChow, na.action = na.exc
 
 # Imprimir los resultados del modelo
 summary(modelo)
+
+
