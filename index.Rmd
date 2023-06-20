@@ -1,0 +1,61 @@
+---
+title: "Extensiones del Modelo de Koyck - Universidad Nacional del Callao    Econometria II"
+author: "Ismael Aguedo Aguilar, ..."
+date: "2023-06-20"
+output: 
+  prettydoc::html_pretty:
+    theme: hpstr 
+    highlight: github
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Repositorio del proyecto en GitHub &#128513;
+
+&#127881; Aquí está nuestro [repositorio](https://github.com/Ismael-Aguedo). ¡Siéntete libre de visitarlo! &#128077;
+
+
+Bien ahora como trabajo de fin de curso mi grupo presentara algunas aplicaciones de las Extensiones del Modelo de Koyck, para ello primero detallamos una breve teoría y luego evaluamos nuestro caso.
+
+# <span style="color:#B4045F">Cambio tecnológico y la demanda de computadoras</span>
+
+Este estudio analiza el crecimiento del uso de las computadoras electrónicas en los Estados Unidos de 1955 a 1965. Se utiliza el enfoque de medir el crecimiento natural y el inducido por cambios tecnológicos, considerando las ecuaciones diferenciales Gompertz y logística. Además, se examina la relación entre los precios y la demanda, y se observa una disminución anual del 20% en los precios.
+
+## <span style="color:#585858">Curva de Gompertz </span>
+
+$$T(t)=T^{*}b^{e^{-rt}}$$
+
+```{r, include=FALSE}
+library(ggplot2)
+
+plot_gompertz <- function() {
+  # Función de la curva de Gompertz
+  gompertz <- function(t, a, b, c) {
+    a * exp(-b * exp(-c * t))
+  }
+
+  # Datos para la gráfica
+  tiempo <- seq(0, 10, 0.1)  # Intervalo de tiempo
+  parametros <- list(a = 1, b = 0.5, c = 0.2)  # Parámetros de la curva
+
+  # Crear un data frame con los datos
+  datos <- data.frame(tiempo = tiempo, valor = gompertz(tiempo, parametros$a, parametros$b, parametros$c))
+
+  # Graficar la curva de Gompertz
+  ggplot(datos, aes(x = tiempo, y = valor)) +
+    geom_line() +
+    labs(title = "Curva de Gompertz",
+         x = "Tiempo",
+         y = "Valor") +
+    theme_minimal()
+}
+```
+
+```{r}
+plot_gompertz()
+```
+
+

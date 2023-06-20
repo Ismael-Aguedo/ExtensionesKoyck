@@ -9,3 +9,8 @@ demandaPCGregoryChow <- data.frame(
   YT_1 = c(NA, 370.26, 991.67, 2389.9, 5087.6, 8362, 12549, 19072, 38264, 64349, 95815, 136845),
   DIV = c(NA, 2.678, 2.41, 2.129, 1.644, 1.501, 1.52, 2.006, 1.682, 1.489, 1.428, 1.419)
 )
+# Realizar la regresión lineal incluyendo todas las filas y tratando NA como en EViews
+modelo <- lm(LDIV ~ LPT + LYT_1, data = demandaPCGregoryChow, na.action = na.exclude)
+
+# Imprimir los resultados del modelo
+summary(modelo)
