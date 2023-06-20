@@ -79,7 +79,7 @@ $$\frac{d[\ln Y(t)]}{dt}=r\left[\ln Y^{*}(t)-\ln Y(t)\right]$$
 Análogamente a $\color{green}{(**)}$ y en tiempo discreto:
 
 $$\ln Y_{t}-\ln Y_{t-1}=a\left(\ln Y^{*}_{t}-\ln Y_{t-1}\right)  \qquad \color{blue}{(*)}$$
-**Dando forma de acuerdo al Cambio Tecnologico y Demanda de Computadoras**
+**Dando forma de acuerdo al Cambio Tecnológico y Demanda de Computadoras**
 
 $$\ln Y^{*}_{t}=\alpha+\beta_{1}\ln P_{t}+\beta_{2}\ln X_{t}+\mu_{t}$$
 Remplazando en $\color{blue}{(*)}$ tenemos el modelo de AJUSTE PARCIAL siguiente:
